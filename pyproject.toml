@@ -1,0 +1,14 @@
+[project]
+name = "finance-analyzer"
+version = "0.0.1"
+description = "A AI-based system for analyzing financial and business reports."
+authors = [{name = "Alexandre Oliveira", email = "alext.oliver24@gmail.com"}]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "matplotlib>=3.10.1",
+    "pandas>=2.2.3",
+    "plotly>=6.0.0",
+    "streamlit>=1.43.2",
+]
