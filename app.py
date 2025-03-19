@@ -1,6 +1,6 @@
-'''
+"""
 This file contains the main code for the Streamlit app.
-'''
+"""
 
 import streamlit as st
 
