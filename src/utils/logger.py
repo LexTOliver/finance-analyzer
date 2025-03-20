@@ -1,26 +1,9 @@
 import logging
 
 
-def configure_logger(file_name: str = "app.log", level: int = logging.INFO) -> logging.Logger:
-    """
-    Configure logger and returns the logger.
-    
-    Parameters:
-        file_name (str): Name of the log file.
-        level (int): Logging level.
-
-    Returns:
-        logging.Logger: Logger object.
-    """
-    logging.basicConfig(
-        filename=file_name,
-        level=level,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    )
-    logger = logging.getLogger(__name__)
-    return logger
-
-def get_logger(file_name: str = "app.log", level: int = logging.DEBUG) -> logging.Logger:
+def get_logger(
+    file_name: str = "app.log", level: int = logging.DEBUG
+) -> logging.Logger:
     """
     Get a logger with the specified name and level.
 
@@ -39,9 +22,7 @@ def get_logger(file_name: str = "app.log", level: int = logging.DEBUG) -> loggin
     if not logger.handlers:
         # -- Create a formatter
         formatter = logging.Formatter(
-            "{asctime} - {levelname}: {message}",
-            style="{",
-            datefmt="%d-%m-%Y %H:%M:%S"
+            "{asctime} - {levelname}: {message}", style="{", datefmt="%d-%m-%Y %H:%M:%S"
         )
 
         # -- Create a console handler
