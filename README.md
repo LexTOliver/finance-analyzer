@@ -16,17 +16,22 @@ This project is an LLM-based application for automated financial and business re
 ```
 finance-analyzer/
 │── src/
-│   ├── app.py              # Main application (Streamlit)
-│   ├── extract/            # Data extraction
 │   ├── analysis/           # Financial processing and analysis
-│   ├── models/             # AI models and processing
 │   ├── api/                # Internal APIs for processing
-│   ├── visualization/      # Graph and report generation
 │   ├── config/             # Project configurations
+│   ├── extract/            # Data extraction
+│   ├── models/             # AI models and processing
+|   ├── pages/              # Streamlit pages
+│   ├── utils/              # Utility functions
+│   ├── visualization/      # Graph and report generation
 │── tests/                  # Automated tests
 │── data/                   # Directory for input files
-│── pyproject.toml          # Dependency management
+│── LICENSE                 # Project license
 │── README.md               # Project documentation
+│── app.py                  # Main application (Streamlit)
+│── pyproject.toml          # Dependency management
+│── requirements.txt        # Python dependencies
+|── uv.lock                 # Astral UV lock file
 ```
 
 ## 🛠️ Setting Up the Environment
