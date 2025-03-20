@@ -1,30 +1,29 @@
 import pandas as pd
 from pathlib import Path
+from src.utils.logger import get_logger
+
+# -- Get the logger
+logger = get_logger()
 
 
-def extract_data(file_path: Path) -> list[pd.DataFrame]:
+def extract_data(file_path: Path) -> dict:
     """
-    Extract data from a file and return a DataFrame.
+    Extract data from a table-like file.
 
     Parameters:
-        file_path (Path): Path of the file
+        file_path - Path: Path of the file
 
     Returns:
-        pd.DataFrame | None: DataFrame with data from file; None if occurs an error
+        dict: Data extracted from the file
     """
     try:
         # -- Read the file based on the file extension
-        df = None
+        df = {}
         match file_path.suffix:
             case ".csv":
-                df = pd.read_csv(file_path)
+                df = pd.read_csv(file_path).to_dict()
             case ".xlsx" | ".xls" | ".xlsm" | ".xlsb":
-                df = pd.read_excel(file_path)
-            case ".json":
-                df = pd.read_json(file_path)
+                df = pd.read_excel(file_path).to_dict()
     except pd.errors.ParserError as e:
-        # TODO: Add logger configuration with logging
-        print(f"Error reading the file: {e}")
-    except Exception as e:
-        print(f"Some error occurred: {e}")
-    return [df]
+        logger.error(f"Error parsing the file: {e}")
+    return df

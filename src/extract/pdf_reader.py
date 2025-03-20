@@ -53,12 +53,14 @@ def _read_pdf(file_path: Path) -> dict:
     """
     # -- Open the file and read data
     texts = {}
-    tables = []
+    tables = {}
     with pdfplumber.open(file_path) as pdf:
         for i, page in enumerate(pdf.pages):
             # -- Extract text from the page
             texts[i] = page.extract_text()
             # -- Extract tables from the page
             for table in page.extract_tables():
-                tables.append(pd.DataFrame(table[1:], columns=table[0]))
-    return {"texts": texts, "tables": tables}
+                df_table = pd.DataFrame(table[1:], columns=table[0])
+                tables[i] = df_table.to_dict()
+
+    return {"texts": texts, "tables": tables} if texts or tables else {}

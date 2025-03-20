@@ -10,13 +10,13 @@ def page_setup() -> None:
     st.write(
         "Welcome to the Finance Analyzer! This app allows you to analyze your financial data."
     )
+    st.divider()
 
     # -- Page content
     st.write("To start, upload your financial data file and then you can analyze it.")
     st.write(
-        "You can upload files with the following extensions: CSV, Excel, JSON, and PDF."
+        "* You can upload files with the following extensions: CSV, Excel, JSON, and PDF."
     )
-    st.write("For PDF files, you can also scan them to extract the text data.")
 
 
 page_setup()
