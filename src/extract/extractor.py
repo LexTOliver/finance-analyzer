@@ -93,7 +93,7 @@ class DataExtractor:
                 raise ValueError(f"File format not supported: {self.file_format}")
         except Exception as e:
             logger.error(f"Error extracting data from {self.file_path}: {e}")
-            raise RuntimeError(f"Error extracting data from {self.file_path}: {e}")
+            raise Exception(f"Error extracting data from {self.file_path}: {e}")
 
         if extracted_data:
             logger.info(f"Data extracted from {self.file_path}")
