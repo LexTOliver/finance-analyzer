@@ -55,7 +55,15 @@ streamlit run src/app.py
 Streamlit will open the interface in your browser.
 
 ## 🧪 Running Tests
-TODO: Add instructions for running tests
+For running the automated tests, you need to add the project path to the PYTHONPATH environment variable and then you can run the tests using by pytest:
+```bash
+PYTHONPATH=$(pwd) pytest tests/
+```
+
+It is possible to run a specific test file or a module by passing the path to the pytest command:
+```bash
+PYTHONPATH=$(pwd) pytest tests/extract/
+```
 
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
