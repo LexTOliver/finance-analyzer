@@ -14,16 +14,14 @@ def extract_data(file_path: Path) -> dict:
         file_path - Path : Path to JSON file.
 
     Returns:
-        dict: Dictionary with data from JSON file; None if an error occurs.
+        dict: Dictionary with data from JSON file
     """
-    data_json = None
+    data_json = {}
 
     try:
         # -- Open and read JSON file
-        json_file = open(file_path, "r", encoding="utf-8").read()
-
-        # -- Load content
-        data_json = json.loads(json_file)
+        with open(file_path, "r", encoding="utf-8") as f:
+            data_json = json.load(f)
     except json.JSONDecodeError as e:
         logger.error(f"Failed to decode JSON from the file {file_path}: {e}")
 

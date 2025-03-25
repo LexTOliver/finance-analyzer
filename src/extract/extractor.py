@@ -29,7 +29,7 @@ class DataExtractor:
         validate_config: Validate the configuration based on the file format
     """
 
-    def __init__(self, file_path: Path, config: dict) -> None:
+    def __init__(self, file_path: Path, config: dict = {}) -> None:
         """
         Initialize the DataExtractor class.
 
@@ -42,30 +42,42 @@ class DataExtractor:
         self.file_format = file_path.suffix[1:]
 
         # -- Validate the configuration and set it
-        self.validate_config()
+        self.validate_config(config)
         self.config = config
 
         # -- Extract data from the file
         self.data = self.extract()
 
-    def validate_config(self) -> None:
+    def validate_config(self, config: dict) -> None:
         """
         Validate the configuration based on the file format.
+
+        Parameters:
+            config - dict: Configuration for the extractor
+
+        Raises:
+            KeyError: If required configuration is missing
+            ValueError: If configuration is invalid
         """
         # TODO: Add more configurations for the extractor
-        # -- Validation for PDF files
-        # if self.file_format == "pdf":
-        #     assert "scan" in self.config, "Scan flag is required for PDF files"
-        #     assert isinstance(self.config["scan"], bool), "Scan flag must be a boolean"
+        if not config:
+            logger.warning("No configuration provided for the extractor")
+        else:
+            # -- Validation for PDF files
+            if self.file_format == "pdf":
+                if "scan" not in config:
+                    raise KeyError("Scan flag is required for PDF files")
+                if not isinstance(config["scan"], bool):
+                    raise ValueError("Scan flag must be a boolean")
 
-        # -- Validation for CSV files
-        # elif self.file_format == "csv":
+            # -- Validation for CSV files
+            # elif self.file_format == "csv":
 
-        # -- Validation for Excel files
-        # elif self.file_format in ["xlsx", "xls", "xlsm", "xlsb"]:
+            # -- Validation for Excel files
+            # elif self.file_format in ["xlsx", "xls", "xlsm", "xlsb"]:
 
-        # -- Validation for JSON files
-        # elif self.file_format == "json":
+            # -- Validation for JSON files
+            # elif self.file_format == "json":
         logger.debug(f"Configuration validated for {self.file_format} file")
 
     def extract(self) -> dict:
@@ -82,18 +94,15 @@ class DataExtractor:
 
         # -- Extract data based on the file format
         extracted_data = {}
-        try:
-            if self.file_format == "pdf":
-                extracted_data = extract_from_pdf(self.file_path, self.config["scan"])
-            elif self.file_format in ["csv", "xlsx", "xls", "xlsm", "xlsb"]:
-                extracted_data = extract_from_dataframe(self.file_path)
-            elif self.file_format == "json":
-                extracted_data = extract_from_json(self.file_path)
-            else:
-                raise ValueError(f"File format not supported: {self.file_format}")
-        except Exception as e:
-            logger.error(f"Error extracting data from {self.file_path}: {e}")
-            raise Exception(f"Error extracting data from {self.file_path}: {e}")
+        if self.file_format == "pdf":
+            extracted_data = extract_from_pdf(self.file_path, self.config["scan"])
+        elif self.file_format in ["csv", "xlsx", "xls", "xlsm", "xlsb"]:
+            extracted_data = extract_from_dataframe(self.file_path)
+        elif self.file_format == "json":
+            extracted_data = extract_from_json(self.file_path)
+        else:
+            logger.error(f"File format not supported: {self.file_format}")
+            raise ValueError(f"File format not supported: {self.file_format}")
 
         if extracted_data:
             logger.info(f"Data extracted from {self.file_path}")
