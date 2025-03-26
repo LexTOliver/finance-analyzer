@@ -1,7 +1,6 @@
 import streamlit as st
-from pathlib import Path
-from io import BytesIO
 from src.extract.extractor import DataExtractor
+from src.api.file_processing import process_uploaded_file
 
 
 def page_setup() -> None:
@@ -34,6 +33,8 @@ def page_setup() -> None:
         st.divider()
 
         # -- Extract data from the file
+        # TODO: Set the configuration based on the user's selection
+        # TODO: Include file format on the configuration
         config = {"scan": scan_pdf}
         extractor = process_uploaded_file(uploaded_file, config)
 
@@ -43,26 +44,6 @@ def page_setup() -> None:
             show_extracted_content(extractor)
         else:
             st.error("No data extracted from the file.")
-
-
-def process_uploaded_file(uploaded_file: BytesIO, config: dict) -> DataExtractor:
-    """
-    Process the uploaded file and extract data from it.
-
-    Parameters:
-        uploaded_file - BytesIO: Uploaded file
-        config - dict: Configuration for the extractor
-
-    Returns:
-        DataExtractor: Extractor object with the extracted data
-    """
-    # TODO: Save the file in a temporary folder defined in the config file
-    # -- Extract data from the file
-    file_path = Path("data/upload") / uploaded_file.name
-    file_path.write_bytes(uploaded_file.getvalue())
-    extractor = DataExtractor(file_path, config)
-
-    return extractor
 
 
 def show_extracted_content(extractor: DataExtractor) -> None:
