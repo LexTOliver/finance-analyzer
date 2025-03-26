@@ -3,7 +3,9 @@ import streamlit as st
 
 def page_setup() -> None:
     """
-    Home page setup.
+    Sets up the Home page.
+
+    - Provides an overview of the app.
     """
     # -- Page title
     st.title("📊 Finance Analyzer")
